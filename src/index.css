@@ -1,0 +1,83 @@
+/* Base styling */
+body {
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Headings */
+h1 {
+  font-weight: 700;
+  text-align: center;
+  color: #0d6efd; /* Bootstrap primary color */
+}
+
+h3 {
+  font-weight: 600;
+}
+
+/* Container */
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Form fields */
+input.form-control,
+select.form-select {
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ced4da;
+  transition: all 0.3s;
+}
+
+input.form-control:focus,
+select.form-select:focus {
+  outline: none;
+  border-color: #0d6efd;
+  box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+}
+
+/* Buttons */
+button.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button.btn-primary:hover {
+  background-color: #0b5ed7;
+}
+
+/* Card for results */
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-weight: 600;
+  color: #ffc107; /* Bootstrap warning color */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  button.btn-primary {
+    width: 100%;
+  }
+}

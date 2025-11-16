@@ -1,0 +1,99 @@
+1. Dataset Setup
+
+You had three types of image data: Conjunctiva (eye), Palm, and Fingernails.
+
+Only Conjunctiva folder had subfolders for Anemic and Non-Anemic.
+
+Palm and Fingernails folders did not have subfolders; all images were in a single folder.
+
+You also had CBC data in anemia.csv containing features like Gender, Hemoglobin, MCH, MCHC, MCV, and the label Result (0 or 1).
+
+Patient IDs were extracted from image filenames (e.g., Anemic-260 (2).png → patient ID 260).
+
+2. Image Preprocessing
+
+Loaded images for each folder.
+
+Resized them to 128x128x3.
+
+Built an autoencoder to extract image features:
+
+Encoder compresses images to a feature vector.
+
+Decoder reconstructs images (used internally, not for classification).
+
+Ensured features were aggregated per patient, instead of one row per image, to match CBC rows.
+
+3. Feature Fusion
+
+Combined:
+
+Image features from the autoencoder.
+
+CBC data from anemia.csv.
+
+Gender (encoded numerically).
+
+Ensured number of patients matched between images and CBC rows.
+
+Resulted in a fusion feature matrix like (num_patients, num_features).
+
+4. Train/Test Split
+
+Split data by patient IDs, not individual images, to prevent leakage.
+
+This ensures images from the same patient don’t appear in both training and test sets.
+
+5. Classifier Training
+
+Trained a machine learning classifier on the fused features.
+
+Used epochs for autoencoder training to properly learn image representations.
+
+Fixed previous issues of:
+
+100% accuracy (overfitting due to multiple images per patient).
+
+Input mismatches with CBC data.
+
+6. Evaluation
+
+Checked classification report:
+
+Precision, recall, F1-score were balanced.
+
+Accuracy is now realistic (~98%), not artificially perfect.
+
+The Problem
+
+Earlier, you were feeding all images individually to the classifier.
+
+Some patients had multiple images, so the model “saw” the same patient multiple times in training and test sets.
+
+This caused overfitting, making the classifier output 100% accuracy.
+
+2. How You Fixed It
+
+Aggregated image features per patient:
+
+Instead of using every single image as a separate training row, you combined all images for a single patient into one feature vector.
+
+This ensured one row per patient, matching the CBC data rows.
+
+Split by patient IDs, not individual images:
+
+Train/test split was done using unique patient IDs.
+
+This prevents images of the same patient from appearing in both training and test sets, which avoids data leakage.
+
+Included all relevant features:
+
+Fused autoencoder image features, CBC features, and gender.
+
+This made the input more meaningful and consistent.
+
+3. Result
+
+Model now learns general patterns per patient, not memorizing repeated images.
+
+Accuracy became realistic (~95–98%), reflecting true performance on unseen patients.
